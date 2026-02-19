@@ -99,11 +99,13 @@ public class JavaUtil {
 			JdkProvider provider;
 			switch (providerName) {
 			case "default":
-				provider = new DefaultJdkProvider(Settings.getDefaultJdkDir());
+				provider = new DefaultJdkProvider(
+						Settings.getDefaultJdkDir(),
+						Settings.getCacheDir(Cache.CacheClass.jdks));
 				break;
 			case "jbang":
 				JBangJdkProvider p = new JBangJdkProvider();
-				p.installer(new FoojayJdkInstaller(p, p::jdkId)
+				p.installer(new FoojayJdkInstaller(p)
 					.distro(Util.getVendor())
 					.remoteAccessProvider(new JBangRemoteAccessProvider()));
 				provider = p;

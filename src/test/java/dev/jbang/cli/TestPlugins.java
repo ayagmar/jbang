@@ -1,13 +1,12 @@
 package dev.jbang.cli;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.matchesPattern;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.matchesRegex;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,9 +43,9 @@ public class TestPlugins extends BaseTest {
 	@Test
 	void testListPlugins() throws Exception {
 		CaptureResult<Integer> result = checkedRun(null, "--help");
-		Pattern p = Pattern.compile(".*External:\\R\\s+one\\s+plugin\\sone\\R\\s+two\\s+plugin\\stwo\\R.*",
-				Pattern.DOTALL | Pattern.MULTILINE);
-		assertThat(result.err, matchesPattern(p));
+		assertThat(result.normalizedErr(), containsString("\nExternal:\n"));
+		assertThat(result.normalizedErr(), containsString("\n  one         plugin one\n"));
+		assertThat(result.normalizedErr(), containsString("\n  two         plugin two\n"));
 	}
 
 	@Test

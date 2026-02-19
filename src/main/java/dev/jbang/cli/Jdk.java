@@ -169,7 +169,7 @@ public class Jdk {
 		if (jdk == null) {
 			throw new ExitException(EXIT_INVALID_INPUT, "JDK " + versionOrId + " is not installed");
 		}
-		jdkMan.uninstallJdk(jdk);
+		jdk.uninstall();
 		Util.infoMsg("Uninstalled JDK:\n  " + versionOrId);
 		return EXIT_OK;
 	}

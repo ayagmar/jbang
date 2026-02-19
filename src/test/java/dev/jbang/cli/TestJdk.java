@@ -201,7 +201,7 @@ class TestJdk extends BaseTest {
 		CaptureResult<Integer> result = checkedRun(jdk -> jdk.javaEnv("11"));
 
 		assertThat(result.result, equalTo(SUCCESS_EXIT));
-		assertThat(result.normalizedOut(), containsString("cache" + File.separator + "jdks" + File.separator + "11"));
+		assertThat(result.normalizedOut(), containsString(File.separator + "currentjdk"));
 	}
 
 	@Test
@@ -211,7 +211,7 @@ class TestJdk extends BaseTest {
 		CaptureResult<Integer> result = checkedRun(jdk -> jdk.javaEnv("21"));
 
 		assertThat(result.result, equalTo(SUCCESS_EXIT));
-		assertThat(result.normalizedOut(), containsString("cache" + File.separator + "jdks" + File.separator + "21"));
+		assertThat(result.normalizedOut(), containsString(File.separator + "currentjdk"));
 	}
 
 	@Test
@@ -277,10 +277,10 @@ class TestJdk extends BaseTest {
 
 		assertThat(result.result, equalTo(SUCCESS_EXIT));
 		assertThat(result.normalizedErr(),
-				equalTo("[jbang] JDK 11 has been linked to: " + javaDir.toPath() + "\n"));
-		assertTrue(Util.isLink(jdkPath.resolve("11")));
-		System.err.println("ASSERT: " + javaDir.toPath() + " - " + jdkPath.resolve("11").toRealPath());
-		assertTrue(Files.isSameFile(javaDir.toPath(), jdkPath.resolve("11").toRealPath()));
+				equalTo("[jbang] JDK 11-linked has been linked to: " + javaDir.toPath() + "\n"));
+		assertTrue(Util.isLink(jdkPath.resolve("11-linked")));
+		System.err.println("ASSERT: " + javaDir.toPath() + " - " + jdkPath.resolve("11-linked").toRealPath());
+		assertTrue(Files.isSameFile(javaDir.toPath(), jdkPath.resolve("11-linked").toRealPath()));
 	}
 
 	@Test
@@ -302,9 +302,9 @@ class TestJdk extends BaseTest {
 
 		assertThat(result.result, equalTo(SUCCESS_EXIT));
 		assertThat(result.normalizedErr(),
-				equalTo("[jbang] JDK 11 has been linked to: " + javaDir.toPath().toString() + "\n"));
-		assertTrue(Util.isLink(jdkPath.resolve("11")));
-		assertTrue(Files.isSameFile(javaDir.toPath(), jdkPath.resolve("11").toRealPath()));
+				equalTo("[jbang] JDK 11-linked has been linked to: " + javaDir.toPath().toString() + "\n"));
+		assertTrue(Util.isLink(jdkPath.resolve("11-linked")));
+		assertTrue(Files.isSameFile(javaDir.toPath(), jdkPath.resolve("11-linked").toRealPath()));
 	}
 
 	@Test
@@ -370,9 +370,9 @@ class TestJdk extends BaseTest {
 
 		assertThat(result.result, equalTo(SUCCESS_EXIT));
 		assertThat(result.normalizedErr(),
-				equalTo("[jbang] JDK 11 has been linked to: " + jdkOk + "\n"));
-		assertTrue(Util.isLink(jdkPath.resolve("11")));
-		assertTrue(Files.isSameFile(jdkOk, (jdkPath.resolve("11").toRealPath())));
+				equalTo("[jbang] JDK 11-linked has been linked to: " + jdkOk + "\n"));
+		assertTrue(Util.isLink(jdkPath.resolve("11-linked")));
+		assertTrue(Files.isSameFile(jdkOk, (jdkPath.resolve("11-linked").toRealPath())));
 	}
 
 	@Test
@@ -384,9 +384,7 @@ class TestJdk extends BaseTest {
 
 		assertThat(result.result, equalTo(SUCCESS_EXIT));
 		assertThat(result.normalizedErr(),
-				containsString("[jbang] Default JDK unset"));
-		assertThat(result.normalizedErr(),
-				containsString("[jbang] Uninstalled JDK:\n  " + jdkVersion));
+				equalTo("[jbang] Uninstalled JDK:\n  " + jdkVersion + "\n"));
 	}
 
 	@Test
@@ -402,9 +400,7 @@ class TestJdk extends BaseTest {
 
 		assertThat(result.result, equalTo(SUCCESS_EXIT));
 		assertThat(result.normalizedErr(),
-				containsString("[jbang] Default JDK unset"));
-		assertThat(result.normalizedErr(),
-				containsString("[jbang] Uninstalled JDK:\n  " + jdkVersion));
+				equalTo("[jbang] Uninstalled JDK:\n  " + jdkVersion + "\n"));
 	}
 
 	@Test
